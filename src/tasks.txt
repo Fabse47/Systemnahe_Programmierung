@@ -1,0 +1,3 @@
+5 Sekunden --> Fehler mit Interrupts
+(Wörter hinzufügen, bisher im RAM)
+Zeit muss stimmen | Frequenz des Timers beeinflussen??

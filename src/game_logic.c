@@ -1,7 +1,7 @@
 #include "game_logic.h"
-#include <stddef.h>  // Falls `NULL` benötigt wird
 
-void init_guessed_word(char *guessed, const char *word, int MAX_WORD_LENGTH) {
+
+void init_guessed_word(char *guessed, const char *word, int MAX_WORD_LENGTH) {  // Ratewort initialisieren
   int i = 0;
   while (word[i] != '\0' && i < MAX_WORD_LENGTH - 1) {
     guessed[i] = '_';  // Ersetze jeden Buchstaben mit "_"
@@ -11,8 +11,7 @@ void init_guessed_word(char *guessed, const char *word, int MAX_WORD_LENGTH) {
 }
 
 
-// sucht und ersetzt Buchstaben im verschleierten Wort
-int check_and_update_word(char letter, const char *word, char *guessed) {
+int check_and_update_word(char letter, const char *word, char *guessed) { // Durchsucht das Ratewort nach der Eingabe
   int found = 0;
   for (int i = 0; word[i] != '\0'; i++) {
     if (word[i] == letter) {
@@ -24,8 +23,7 @@ int check_and_update_word(char letter, const char *word, char *guessed) {
 }
 
 
-// Prüft, ob noch Unterstriche im erratenen Wort sind
-int word_guessed(const char *guessed) {
+int word_guessed(const char *guessed) { // Prüft, ob noch Unterstriche im erratenen Wort sind
   for (int i = 0; guessed[i] != '\0'; i++) {
     if (guessed[i] == '_') {
       return 0;  // Noch nicht erraten
