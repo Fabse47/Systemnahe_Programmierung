@@ -12,10 +12,10 @@
 #define RESET   "\033[0m"
 
 void display_hangman(int errors); // Hangman-Figur ausgeben
-void display_game_state(const char *guessed, int errors); // aktuellen Spielstatus anzeigen
+void display_game_state(const char *guessed, uint32_t errors); // aktuellen Spielstatus anzeigen
 void display_winner();  // Siegeserklärung
 void display_loser(const char *word); // Auflösung nach der Niederlage
-void display_statistics(int errors);  // rechnet die Timer-Ticks in Millisekunden um
+void display_statistics(uint32_t errors);  // rechnet die Timer-Ticks in Millisekunden um
 uint32_t correct_time(uint32_t time); // Spielstatistik ausgeben
 
 #endif // OUTPUT_H

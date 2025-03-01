@@ -79,7 +79,7 @@ void display_hangman(int errors) {  // Hangman-Figur ausgeben
 }
 
 
-void display_game_state(const char *guessed, int errors) {  // aktuellen Spielstatus anzeigen
+void display_game_state(const char *guessed, uint32_t errors) {  // aktuellen Spielstatus anzeigen
   uart_writeString("\nAktuelles Wort: ");
   uart_writeString(guessed);
   uart_writeString("\n");
@@ -113,7 +113,7 @@ uint32_t correct_time(uint32_t time){ // rechnet die Timer-Ticks in Millisekunde
 }
 
 
-void display_statistics(int errors) { // Spielstatistik ausgeben
+void display_statistics(uint32_t errors) { // Spielstatistik ausgeben
   uart_writeString("\nSpielstatistik\n");
 
   if (response_count > 0) {
