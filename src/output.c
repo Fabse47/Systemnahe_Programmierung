@@ -108,7 +108,7 @@ void display_loser(const char *word) {  // Auflösung nach der Niederlage
 }
 
 
-int correct_time(int time){ // rechnet die Timer-Ticks in Millisekunden um
+uint32_t correct_time(uint32_t time){ // rechnet die Timer-Ticks in Millisekunden um
   return (time * 1000) / 488; // Berechnet die korrekte Zeit --> Timer-Ticks in ms
 }
 

@@ -33,17 +33,11 @@ char get_player_input_with_timeout() {  // Eingabe mit Timer
   uint32_t start_time = timer_captureCompareGet(TIMER0, CC0);
 
   while (uart_readByte() != 0); // Leere den UART-Puffer vor jeder Eingabe
-
   char input = 0;
+
   while (1) {
     timer_capture(TIMER0, CC0);
     uint32_t elapsed_time = timer_captureCompareGet(TIMER0, CC0) - start_time;
-
-
-    if (correct_time(elapsed_time) >= TIMEOUT_THRESHOLD) {
-      uart_writeString("\nZeit überschritten! Fehler gezählt.\n");
-      return '\0';
-    }
 
     input = uart_readByteBlocking();
     if (input != 0) {
@@ -54,7 +48,7 @@ char get_player_input_with_timeout() {  // Eingabe mit Timer
       while (uart_readByte() != 0); // Erneut Puffer leeren nach der Eingabe
 
       timer_capture(TIMER0, CC0);
-      elapsed_time = timer_captureCompareGet(TIMER0, CC0) - start_time;
+      uint32_t elapsed_time = timer_captureCompareGet(TIMER0, CC0) - start_time;
 
       total_response_time += correct_time(elapsed_time);
       response_count++;

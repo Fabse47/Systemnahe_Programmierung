@@ -1,7 +1,7 @@
 #include "game_logic.h"
 
 
-void init_guessed_word(char *guessed, const char *word, int MAX_WORD_LENGTH) {  // Ratewort initialisieren
+void init_guessed_word(char *guessed, const char *word) {  // Ratewort initialisieren
   int i = 0;
   while (word[i] != '\0' && i < MAX_WORD_LENGTH - 1) {
     guessed[i] = '_';  // Ersetze jeden Buchstaben mit "_"
@@ -30,4 +30,47 @@ int word_guessed(const char *guessed) { // Prüft, ob noch Unterstriche im errat
     }
   }
   return 1;  // Alle Buchstaben wurden erraten
+}
+
+
+void input_menu() // Eingabemenü am Anfang bzw. zwischen den Spielen
+{
+  uart_writeString("Willkommen zu hangman...\n");
+  uart_writeString("Zum Spielen \"s\" drücken.\nWenn Sie ein neues Wort zur Liste hinzufügen möchten dann drücken Sie \"a\".\n");
+  while (1)
+  {
+    char input = get_player_input();
+    if (input == 's')
+    {
+      break;
+    }
+    if (input == 'a')
+    {
+      add_custom_word();
+      uart_writeString("\nZum Spielen \"s\" drücken.\nWenn Sie ein weiteres Wort zur Liste hinzufügen möchten dann drücken Sie \"a\".\n");
+    }
+    else
+    {
+      uart_writeString("Ungültige Eingabe\n");
+    }
+  }
+}
+
+
+void input_menu_after_game()
+{
+  uart_writeString("Um erneut zu spielen \"r\" drücken.\nZum Abbrechen \"x\" drücken.\n");
+  while (true)
+  {
+    char input = get_player_input();
+    if (input == 'r') // Programm neu starten
+    {
+      break;
+    }
+    if (input == 'x') // Programm mit Endlosschleife beenden
+    {
+      uart_writeString("Programm beendet");
+      while (true){}
+    }
+  }
 }
