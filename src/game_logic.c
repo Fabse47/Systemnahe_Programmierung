@@ -57,7 +57,7 @@ void input_menu() // Eingabemenü am Anfang bzw. zwischen den Spielen
 }
 
 
-void input_menu_after_game()
+void input_menu_after_game()  // Eingabemenü am Ende des Spiels
 {
   uart_writeString("Um erneut zu spielen \"r\" drücken.\nZum Abbrechen \"x\" drücken.\n");
   while (true)

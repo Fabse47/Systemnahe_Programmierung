@@ -48,7 +48,7 @@ void add_custom_word() {  // eigenes Wort zur Wortliste hinzufügen
 
 void select_random_word(char *word) { // zufälliges Wort auswählen
   if (word_count == 0) {
-    uart_writeString("⚠Keine Wörter verfügbar! Nutze Standardwörter.\n");
+    uart_writeString("Keine Wörter verfügbar! Nutze Standardwörter.\n");
     my_strcpy(word, "hangman");
     return;
   }

@@ -108,28 +108,13 @@ void display_loser(const char *word) {  // Auflösung nach der Niederlage
 }
 
 
-uint32_t correct_time(uint32_t time){ // rechnet die Timer-Ticks in Millisekunden um
-  return (time * 1000) / 488; // Berechnet die korrekte Zeit --> Timer-Ticks in ms
-}
-
-
 void display_statistics(uint32_t errors) { // Spielstatistik ausgeben
   uart_writeString("\nSpielstatistik\n");
 
   if (response_count > 0) {
-    total_response_time = correct_time(total_response_time);  // Umrechnung auf Millisekunden
-    uint32_t average_time = total_response_time / response_count;
 
-    uart_writeString("Durchschnittliche Antwortzeit: ");
-    uart_writeNumber(average_time/1000);
-    uart_writeString(",");
-    uart_writeNumber(average_time%1000);
-    uart_writeString(" s\n");
-    uart_writeString("Gesamtzeit: ");
-    uart_writeNumber(total_response_time/1000);
-    uart_writeString(",");
-    uart_writeNumber(total_response_time%1000);
-    uart_writeString(" s\n");
+    uart_writeString("Durchschnittliche Antwortzeit: \n");
+    uart_writeString("Gesamtzeit: \n");
     uart_writeString("Anzahl Fehler: ");
     uart_writeNumber(errors);
     uart_writeString("\n");

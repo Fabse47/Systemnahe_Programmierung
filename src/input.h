@@ -10,6 +10,5 @@
 #define TIMEOUT_THRESHOLD (5*488)  // Timeout in Timer-Ticks (5 Sekunden)
 
 char get_player_input();  // Eingabe ohne Timer
-char get_player_input_with_timeout(); // Eingabe mit Timer
 
 #endif // INPUT_H

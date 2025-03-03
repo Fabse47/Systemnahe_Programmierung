@@ -1,21 +1,10 @@
 #include "main.h"
 
-
-uint32_t total_response_time = 0;  // gesamte Antwortezeit
 uint32_t response_count = 0; // Anzahl der Versuche (getippte Buchstaben)
-
 
 // hangman vor dem Start zurücksetzen
 void reset_program() {
-  timer_stop(TIMER0);
-  timer_clear(TIMER0);
-
-  //timer_init(TIMER0);
-
   while (uart_readByte() != 0);  // UART-Puffer leeren
-
-  total_response_time = 0;
-  response_count = 0;
 }
 
 
@@ -39,7 +28,7 @@ int hangman() {
     while (errors < MAX_ERRORS) { // Abbruchbedingung bei Fehleranzahl
 
       display_game_state(guessed, errors);  // Spielstand anzeigen
-      char input = get_player_input_with_timeout(); // Spielereingabe einlesen
+      char input = get_player_input(); // Spielereingabe einlesen
 
       if (!check_and_update_word(input, word, guessed)) { // Falls kein Buchstabe erraten wurde, Fehler erhöhen
         errors++;

@@ -19,20 +19,7 @@ static void timerTest( void );
 
 int main( void )
 {
-  uart_init();
-  uart_writeString("TEST");
-  //waitRelease();
-
-  //uart_init();
-  //uart_writeString( "Hello World!\n" );
   hangman();
-
-  //char myARRAY[]={ 'A','B','C' };
-  //uart_writeString( myARRAY );
-
-  // randomNumberTest();
-
-  timerTest();
 }
 
 static void waitRelease( void )
