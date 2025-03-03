@@ -3,9 +3,9 @@
 
 #include "../devices/random.h"
 #include "../devices/uart.h"
+#include "main.h"
 
-#define MAX_WORDS 10
-#define MAX_WORD_LENGTH 12
+#define MAX_WORDS 20
 
 void my_strcpy(char *dest, const char *src);  // Eigene strcpy-Implementierung
 void add_custom_word(); // eigenes Wort zur Wortliste hinzufügen

@@ -10,9 +10,10 @@ void my_strcpy(char *dest, const char *src) { // Eigene strcpy-Implementierung
 
 
 char word_list[MAX_WORDS][MAX_WORD_LENGTH] = {  // Wortliste
-  "hangman", "computer", "cortex", "embedded", "hardware"
+  "hangman", "computer", "cortex", "embedded", "hardware",
+  "stack", "heap", "interrupt", "register", "kernel", "treiber"
 };
-int word_count = 5;  // Anzahl gespeicherter Wörter
+int word_count = 11;  // Anzahl gespeicherter Wörter
 
 
 void add_custom_word() {  // eigenes Wort zur Wortliste hinzufügen

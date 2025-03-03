@@ -5,6 +5,7 @@ uint32_t response_count = 0; // Anzahl der Versuche (getippte Buchstaben)
 // hangman vor dem Start zurücksetzen
 void reset_program() {
   while (uart_readByte() != 0);  // UART-Puffer leeren
+  response_count = 0;
 }
 
 

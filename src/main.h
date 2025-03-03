@@ -9,7 +9,7 @@
 #include "../devices/uart.h"
 
 #define MAX_ERRORS 6  // Maximale Anzahl an Fehlern
-#define MAX_WORD_LENGTH 12  // Maximale Wortlänge (Anzahl Buchstaben)
+#define MAX_WORD_LENGTH 18  // Maximale Wortlänge (Anzahl Buchstaben)
 
 extern uint32_t response_count;  // Anzahl der Versuche (getippte Buchstaben)
 static uint32_t errors;
