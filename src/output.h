@@ -2,6 +2,7 @@
 #define OUTPUT_H
 
 #include "main.h" // für response_count und total_response_time
+#include "hangman_timer.h"
 #include "../devices/uart.h"
 #include "../devices/timer.h"
 

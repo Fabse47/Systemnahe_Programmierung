@@ -3,6 +3,7 @@
 
 #include "../devices/uart.h"
 #include "input.h"
+#include "main.h"
 
 
 void init_guessed_word(char *guessed, const char *word); // Ratewort initialisieren

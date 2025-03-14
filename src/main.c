@@ -7,15 +7,17 @@ uint32_t response_count = 0; // Anzahl der Versuche (getippte Buchstaben)
 
 // hangman vor dem Start zurücksetzen
 void reset_program() {
-  timer_stop(TIMER0);
-  timer_clear(TIMER0);
-
-  //timer_init(TIMER0);
-
-  while (uart_readByte() != 0);  // UART-Puffer leeren
+  start_hangman_timer();
+  start_timeout_timer();
 
   total_response_time = 0;
   response_count = 0;
+}
+
+
+// Fehler erhöhen
+void inc_errors(){
+  errors++;
 }
 
 

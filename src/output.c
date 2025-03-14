@@ -114,8 +114,10 @@ uint32_t correct_time(uint32_t time){ // rechnet die Timer-Ticks in Millisekunde
 
 
 void display_statistics(uint32_t errors) { // Spielstatistik ausgeben
-  uart_writeString("\nSpielstatistik\n");
+  stop_timeout_timer();
+  total_response_time = stop_hangman_timer();
 
+  uart_writeString("\nSpielstatistik\n");
   if (response_count > 0) {
     total_response_time = correct_time(total_response_time);  // Umrechnung auf Millisekunden
     uint32_t average_time = total_response_time / response_count;

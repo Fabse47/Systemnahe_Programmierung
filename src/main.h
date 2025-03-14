@@ -5,6 +5,7 @@
 #include "input.h"
 #include "output.h"
 #include "wordlist.h"
+#include "hangman_timer.h"
 #include "../devices/timer.h"
 #include "../devices/uart.h"
 
@@ -16,6 +17,7 @@ extern uint32_t response_count;  // Anzahl der Versuche (getippte Buchstaben)
 static uint32_t errors;
 
 void reset_program(); // Spiel zurücksetzen
+void inc_errors();  // Fehler erhöhen
 int hangman();  // main
 
 #endif // MAIN_H

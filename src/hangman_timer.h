@@ -11,6 +11,6 @@
 void start_hangman_timer();
 uint32_t stop_hangman_timer();
 void start_timeout_timer();
-uint32_t stop_timeout_timer();
+void stop_timeout_timer();
 
 #endif // HANGMAN_TIMER_H
