@@ -31,8 +31,8 @@ int hangman() {
       display_game_state(guessed, errors);  // Spielstand anzeigen
       char input = get_player_input(); // Spielereingabe einlesen
 
-      if (!check_and_update_word(input, word, guessed)) { // Falls kein Buchstabe erraten wurde, Fehler erhöhen
-        errors++;
+      if (!check_and_update_word(input, word, guessed)) {
+        errors++;// Falls kein Buchstabe erraten wurde, Fehler erhöhen
       }
 
 
