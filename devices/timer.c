@@ -141,22 +141,3 @@ void timer_clearCompareEvent( Timer timer )
 
   register_write(timerBase | TIMER_COMPARE_0, TIMER_EVENT_CLEAR);
 }
-
-// ----------Eigene Funktionen ---------------
-void timer_start_measurement(Timer timer) {
-  timer_stop(timer);  // **Falls der Timer noch läuft, sofort stoppen**
-  timer_clear(timer); // **Timer vollständig zurücksetzen**
-  timer_start(timer); // **Timer neu starten**
-
-  timer_capture(timer, CC0);  // **Erste Messung direkt in CC0 speichern**
-}
-
-
-uint32_t timer_get_elapsed(Timer timer) {
-  timer_capture(TIMER0, CC0);  // Timer-Wert in CC_0 speichern
-  uint32_t elapsed_time = timer_captureCompareGet(TIMER0, CC0);  // Dann auslesen
-
-  return elapsed_time;
-}
-
-// -------------------------------------------
