@@ -18,6 +18,7 @@ void reset_program() {
 // Fehler erhöhen
 void inc_errors(){
   errors++;
+  display_statistics(errors);
 }
 
 
