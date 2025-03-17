@@ -7,6 +7,7 @@
 #include "../devices/timer.h"
 
 #define TIMEOUT_THRESHOLD (5*488)  // Timeout in Timer-Ticks (5 Sekunden)
+extern uint32_t timeout_time;
 
 void start_hangman_timer();
 uint32_t stop_hangman_timer();

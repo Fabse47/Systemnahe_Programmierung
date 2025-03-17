@@ -13,13 +13,13 @@ char get_player_input() { // Eingabe ohne Timer
   uart_writeString("\n");
 
   // Prüfen, ob es ein gültiger Buchstabe ist (a-z oder A-Z)
-  if ((input >= 'a' && input <= 'z') || (input >= 'A' && input <= 'Z')) {
+  if ((input >= 'a' && input <= 'z') || (input >= 'A' && input <= 'Z' || input >= '0' && input <= '9')) {
     if (input >= 'A' && input <= 'Z') {
       input += 32;  // In Kleinbuchstaben umwandeln
     }
     return input;
   } else {
-    uart_writeString("Ungültige Eingabe! Bitte nur Buchstaben eingeben.\n");
+    uart_writeString("Ungültige Eingabe!\n");
     return get_player_input();  // Rekursiver Aufruf für eine neue Eingabe
   }
 }

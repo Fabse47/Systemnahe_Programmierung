@@ -18,12 +18,14 @@ void reset_program() {
 // Fehler erhöhen
 void inc_errors(){
   errors++;
+  display_hangman(errors);
 }
 
 
 // main
 int hangman() {
   uart_init();  // Serielle Schnittstelle initialisieren
+  timeout_time = 4; // Standard Antwortzeit auf 4s setzen
 
   while (true)  // Hauptschleife
   {

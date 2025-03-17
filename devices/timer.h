@@ -4,6 +4,7 @@
 #include <stdbool.h>
 #include <stdint.h>
 #include "../src/main.h"
+#include "../src/hangman_timer.h"
 
 typedef enum Timer {
   TIMER0,
