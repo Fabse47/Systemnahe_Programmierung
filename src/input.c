@@ -43,7 +43,18 @@ char get_player_input_with_timeout() {
       while (uart_readByte() != 0); // Erneut Puffer leeren nach der Eingabe
       response_count++; // Antwortzähler erhöhen
 
-      return input;
+      // Prüfen, ob es ein gültiger Buchstabe ist (a-z oder A-Z)
+      if ((input >= 'a' && input <= 'z') || (input >= 'A' && input <= 'Z')) {
+        if (input >= 'A' && input <= 'Z') {
+          input += 32;  // In Kleinbuchstaben umwandeln
+        }
+        return input;
+      }
+      else
+      {
+        uart_writeString("Bitte nur Buchstaben eingeben.\n");
+        return get_player_input_with_timeout();
+      }
     }
   }
 }
