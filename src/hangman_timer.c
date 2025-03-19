@@ -1,14 +1,16 @@
 #include "hangman_timer.h"
 
 
-void start_timeout_timer() {  // Timer für gesamte Spielzeit starten
+// Timer für gesamte Spielzeit starten
+void start_timeout_timer() {
   timer_init_detailed( TIMER0, 15, TIMER_MODE_TIMER, TIMER_BIT_MODE_32 );  // timer0 initialisieren
   timer_captureCompareSet( TIMER0, CC0, 1953, true );
   timer_start( TIMER0 );  // timer0 starten
 }
 
 
-void stop_timeout_timer() {  // Timer für gesamte Spielzeit stoppen
+// Timer für gesamte Spielzeit stoppen
+void stop_timeout_timer() {
   timer_capture( TIMER0, CC0 );
   timer_stop( TIMER0 );  // timer0 stoppen
 
@@ -19,13 +21,15 @@ void stop_timeout_timer() {  // Timer für gesamte Spielzeit stoppen
 }
 
 
-void start_hangman_timer() {  // Timer für zu langes Warten starten
+// Timer für zu langes Warten starten
+void start_hangman_timer() {
   timer_init_detailed( TIMER1, 15, TIMER_MODE_TIMER, TIMER_BIT_MODE_32 );  // timer1 initialisieren
   timer_start( TIMER1 );  // timer1 starten
 }
 
 
-uint32_t stop_hangman_timer() {  // Timer für zu langes Warten stoppen
+// Timer für zu langes Warten stoppen
+uint32_t stop_hangman_timer() {
   timer_capture( TIMER1, CC1 );
   timer_stop( TIMER1 );  // timer1 stoppen
 

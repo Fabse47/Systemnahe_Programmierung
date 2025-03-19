@@ -44,7 +44,7 @@ void Interrupt8_Handler(void)
   register_write( Interrupt_ICPR, Interrupt_ID8 );
 
   uart_writeString( "\nZu lange gebraucht: Fehler gezählt!\n");
-  inc_errors();
+  inc_errors(); // Fehler erhöhen
 }
 
 void timer_init( Timer const timer )

@@ -1,7 +1,8 @@
 #include "wordlist.h"
 
 
-void my_strcpy(char *dest, const char *src) { // Eigene strcpy-Implementierung
+// Eigene strcpy-Implementierung
+void my_strcpy(char *dest, const char *src) {
   while (*src) {
     *dest++ = *src++;
   }
@@ -15,28 +16,29 @@ char word_list[MAX_WORDS][MAX_WORD_LENGTH] = {  // Wortliste
 int word_count = 5;  // Anzahl gespeicherter Wörter
 
 
-void add_custom_word() {  // eigenes Wort zur Wortliste hinzufügen
+// eigenes Wort zur Wortliste hinzufügen
+void add_custom_word() {
   if (word_count >= MAX_WORDS) {
     uart_writeString("Wortliste ist voll! Kann keine weiteren Wörter hinzufügen.\n");
     return;
   }
 
   uart_writeString("Gib dein eigenes Wort ein: ");
-  char new_word[MAX_WORD_LENGTH];
+  char new_word[MAX_WORD_LENGTH]; // Wort deklarieren
   int i = 0;
 
   while (i < MAX_WORD_LENGTH - 1) {
     char c = uart_readByteBlocking();
-    if (c == '\n' || c == '\r') {
+    if (c == '\n' || c == '\r') { // Eingabe von "Enter" bestätigt das Wort
       break;
     }
     new_word[i++] = c;
     uart_writeByte(c);
   }
-  new_word[i] = '\0';
+  new_word[i] = '\0'; // \0 am Ende des char Arrays einfügen
 
   for (int j = 0; j < MAX_WORD_LENGTH; j++) {
-    word_list[word_count][j] = new_word[j]; // Wort im RAM speichern (jedoch flüchtig)
+    word_list[word_count][j] = new_word[j]; // Wort im RAM speichern
   }
   word_count++;
   uart_writeString("\nNeues Wort: \"");
@@ -46,15 +48,16 @@ void add_custom_word() {  // eigenes Wort zur Wortliste hinzufügen
 }
 
 
-void select_random_word(char *word) { // zufälliges Wort auswählen
-  if (word_count == 0) {
-    uart_writeString("⚠Keine Wörter verfügbar! Nutze Standardwörter.\n");
+// zufälliges Wort auswählen
+void select_random_word(char *word) {
+  if (word_count == 0) {  // Ausnahmefall, sollte nie auftreten
+    uart_writeString("Keine Wörter verfügbar! Nutze Standardwörter.\n");
     my_strcpy(word, "hangman");
     return;
   }
 
-  rng_init();
-  int index = rng_getRandomValue_waiting();
-  index = index % word_count;
-  my_strcpy(word, word_list[index]);
+  rng_init(); // Initialisierung des Zufalls
+  int index = rng_getRandomValue_waiting(); // zufälligen Zahlenwert speichern
+  index = index % word_count; // mithilfe von Modulo auf einen Indexwert im Bereich der Wortliste kommen
+  my_strcpy(word, word_list[index]);  // Wort speichern
 }

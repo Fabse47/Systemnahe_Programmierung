@@ -1,15 +1,15 @@
 #include "input.h"
 
 
-char get_player_input() { // Eingabe ohne Timer
+// Eingabe ohne Timer
+char get_player_input() {
   char input;
   do {
-    input = uart_readByte();  // Nicht blockierende UART-Funktion
-  } while (input == 0);  // Warten, bis ein gültiger Wert kommt
+    input = uart_readByte();  // Eingabe einlesen
+  } while (input == 0);  // Warten, bis gültiger Wert kommt
   while (uart_readByte() != 0);  // UART-Puffer leeren
 
-  // Echo der Eingabe (falls gewünscht)
-  uart_writeByte(input);
+  uart_writeByte(input);  // Echo der Eingabe
   uart_writeString("\n");
 
   // Prüfen, ob es ein gültiger Buchstabe ist (a-z oder A-Z)
@@ -25,7 +25,8 @@ char get_player_input() { // Eingabe ohne Timer
 }
 
 
-char get_player_input_with_timeout() {  // Eingabe mit Timer
+// Eingabe mit Timer
+char get_player_input_with_timeout() {
   uart_writeString("\nGib einen Buchstaben ein: ");
 
   while (uart_readByte() != 0); // Leere den UART-Puffer vor jeder Eingabe
@@ -33,14 +34,14 @@ char get_player_input_with_timeout() {  // Eingabe mit Timer
 
   while (1) {
 
-    input = uart_readByteBlocking();
-    if (input != 0) {
+    input = uart_readByteBlocking();  // Eingabe einlesen
+    if (input != 0) { // Warten, bis gültiger Wert kommt
 
-      uart_writeByte(input);
+      uart_writeByte(input);  // Echo der Eingabe
       uart_writeString("\n");
 
       while (uart_readByte() != 0); // Erneut Puffer leeren nach der Eingabe
-      response_count++;
+      response_count++; // Antwortzähler erhöhen
 
       return input;
     }

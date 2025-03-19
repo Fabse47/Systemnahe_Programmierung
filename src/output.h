@@ -16,7 +16,7 @@ void display_hangman(int errors); // Hangman-Figur ausgeben
 void display_game_state(const char *guessed, uint32_t errors); // aktuellen Spielstatus anzeigen
 void display_winner();  // Siegeserklärung
 void display_loser(const char *word); // Auflösung nach der Niederlage
-void display_statistics(uint32_t errors);  // rechnet die Timer-Ticks in Millisekunden um
-uint32_t correct_time(uint32_t time); // Spielstatistik ausgeben
+void display_statistics(uint32_t errors);  // Spielstatistik ausgeben
+uint32_t correct_time(uint32_t time); // rechnet die Timer-Ticks in Millisekunden um
 
 #endif // OUTPUT_H

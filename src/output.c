@@ -1,6 +1,7 @@
 #include "output.h"
 
 
+// "Galgen-Strings"
 const char *hangman_stages[] = {
   "  +---+\n"
   "  |   |\n"
@@ -60,7 +61,8 @@ const char *hangman_stages[] = {
 };
 
 
-void display_hangman(int errors) {  // Hangman-Figur ausgeben
+// Hangman-Figur ausgeben
+void display_hangman(int errors) {
   if (errors == 0) {
     uart_writeString(RESET);  // Setzt die Standardfarbe zurück
   }
@@ -79,7 +81,8 @@ void display_hangman(int errors) {  // Hangman-Figur ausgeben
 }
 
 
-void display_game_state(const char *guessed, uint32_t errors) {  // aktuellen Spielstatus anzeigen
+// aktuellen Spielstatus anzeigen
+void display_game_state(const char *guessed, uint32_t errors) {
   uart_writeString("\nAktuelles Wort: ");
   uart_writeString(guessed);
   uart_writeString("\n");
@@ -95,12 +98,14 @@ void display_game_state(const char *guessed, uint32_t errors) {  // aktuellen Sp
 }
 
 
-void display_winner() { // Siegeserklärung
+// Siegeserklärung
+void display_winner() {
   uart_writeString("\nGlückwunsch! Du hast das Wort erraten!\n");
 }
 
 
-void display_loser(const char *word) {  // Auflösung nach der Niederlage
+// Auflösung nach der Niederlage
+void display_loser(const char *word) {
   uart_writeString("\nGame Over! Du hast das Wort nicht erraten.\n");
   uart_writeString("Das richtige Wort war: ");
   uart_writeString(word);
@@ -108,12 +113,14 @@ void display_loser(const char *word) {  // Auflösung nach der Niederlage
 }
 
 
-uint32_t correct_time(uint32_t time){ // rechnet die Timer-Ticks in Millisekunden um
+// rechnet die Timer-Ticks in Millisekunden um
+uint32_t correct_time(uint32_t time){
   return (time * 1000) / 488; // Berechnet die korrekte Zeit --> Timer-Ticks in ms
 }
 
 
-void display_statistics(uint32_t errors) { // Spielstatistik ausgeben
+// Spielstatistik ausgeben
+void display_statistics(uint32_t errors) {
   stop_timeout_timer();
   total_response_time = stop_hangman_timer();
 
