@@ -1,5 +1,7 @@
 #include "main.h"
 
+char word[MAX_WORD_LENGTH]; // Ratewort initialisieren
+char guessed[MAX_WORD_LENGTH];  // Erratenes Wort initialisieren
 
 uint32_t total_response_time = 0;  // gesamte Antwortezeit
 uint32_t response_count = 0; // Anzahl der Versuche (getippte Buchstaben)
@@ -7,18 +9,46 @@ uint32_t response_count = 0; // Anzahl der Versuche (getippte Buchstaben)
 
 // hangman vor dem Start zurücksetzen
 void reset_program() {
-  start_hangman_timer();
-  start_timeout_timer();
+  start_hangman_timer();  // Timer für Gesamtzeit starten
+  start_timeout_timer();  // Timer für Timout der Züge starten
 
-  total_response_time = 0;
-  response_count = 0;
+  total_response_time = 0;  // Gesamtzeit auf 0 setzen
+  response_count = 0; // Anzahl der Züge auf 0 setzen
+  errors = 0; // Fehler auf 0 setzten
 }
 
 
-// Fehler erhöhen
+// Timer-Interrupt: Fehler erhöhen
 void inc_errors(){
-  errors++;
-  display_statistics(errors);
+  errors++; // Fehler erhöhen
+  response_count++; // als Versuch zählen
+  display_game_state(guessed, errors);  // Spielstand ausgeben
+
+  check_gamestate();  // Abbruchbedingung
+
+  // Nach Interrupt-Meldung muss das Eingabefeld wieder angezeigt werden:
+  uart_writeString(RESET);  // Setzt die Standardfarbe zurück
+  uart_writeString("\nGib einen Buchstaben ein: ");
+}
+
+
+void check_gamestate()
+{
+  if (errors >= MAX_ERRORS)
+  {
+    display_game_state(guessed, errors);
+    display_loser(word);
+    display_statistics(errors);
+    uart_writeString("Spiel beendet.");
+    while(1);
+  }
+  else if(word_guessed(guessed)) {  // Spiel gewonnen
+    display_game_state(guessed, errors);
+    display_winner();
+    display_statistics(errors);
+    uart_writeString("Spiel beendet.");
+    while(1);
+  }
 }
 
 
@@ -26,45 +56,22 @@ void inc_errors(){
 int hangman() {
   uart_init();  // Serielle Schnittstelle initialisieren
 
-  while (true)  // Hauptschleife
-  {
-    input_menu(); // Eingabemenü am Anfang bzw. zwischen den Spielen
-    uart_writeString("Starte Spiel\n");
-    reset_program();
+  input_menu(); // Eingabemenü am Anfang des Spiels
+  reset_program();  // Timer starten, Variablen initialisieren
 
-    char word[MAX_WORD_LENGTH]; // Ratewort initialisieren
-    char guessed[MAX_WORD_LENGTH];  // Erratenes Wort initialisieren
-    errors = 0; // Fehler auf 0 setzten
+  select_random_word(word);  // Zufälliges Wort wählen
+  init_guessed_word(guessed, word);  // Leere Darstellung "_ _ _"
 
-    select_random_word(word);  // Zufälliges Wort wählen
-    init_guessed_word(guessed, word);  // Leere Darstellung "_ _ _"
+  while (1) {
+    check_gamestate(); // Abbruchbedingung
 
-    while (errors < MAX_ERRORS) { // Abbruchbedingung bei Fehleranzahl
+    display_game_state(guessed, errors);  // Spielstand anzeigen
+    char input = get_player_input_with_timeout(); // Spielereingabe einlesen
 
-      display_game_state(guessed, errors);  // Spielstand anzeigen
-      char input = get_player_input_with_timeout(); // Spielereingabe einlesen
-
-      if (!check_and_update_word(input, word, guessed)) { // Falls kein Buchstabe erraten wurde, Fehler erhöhen
-        errors++;
-      }
-
-
-      if (word_guessed(guessed)) {  // Spiel gewonnen
-        display_game_state(guessed, errors);
-        display_winner();
-        display_statistics(errors);
-        break;
-      }
+    if (!check_and_update_word(input, word, guessed)) { // Falls kein Buchstabe erraten wurde, Fehler erhöhen
+      errors++;
     }
-
-    if (errors >= MAX_ERRORS) { // Spiel verloren
-      display_game_state(guessed, errors);
-      display_loser(word);
-      display_statistics(errors);
-    }
-
-    input_menu_after_game();
-
   }
+
   return 0;
 }

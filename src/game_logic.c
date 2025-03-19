@@ -36,12 +36,13 @@ int word_guessed(const char *guessed) { // Prüft, ob noch Unterstriche im errat
 void input_menu() // Eingabemenü am Anfang bzw. zwischen den Spielen
 {
   uart_writeString("Willkommen zu hangman...\n");
-  uart_writeString("Zum Spielen \"s\" drücken.\nWenn Sie ein neues Wort zur Liste hinzufügen möchten dann drücken Sie \"a\".\n");
+  uart_writeString("Zum Spielen \"s\" drücken.\nEigenes Wort zur Wortliste hinzufügen \"a\" drücken.\n");
   while (1)
   {
     char input = get_player_input();
     if (input == 's')
     {
+      uart_writeString("Starte Spiel\n");
       break;
     }
     if (input == 'a')
@@ -52,25 +53,6 @@ void input_menu() // Eingabemenü am Anfang bzw. zwischen den Spielen
     else
     {
       uart_writeString("Ungültige Eingabe\n");
-    }
-  }
-}
-
-
-void input_menu_after_game()
-{
-  uart_writeString("Um erneut zu spielen \"r\" drücken.\nZum Abbrechen \"x\" drücken.\n");
-  while (true)
-  {
-    char input = get_player_input();
-    if (input == 'r') // Programm neu starten
-    {
-      break;
-    }
-    if (input == 'x') // Programm mit Endlosschleife beenden
-    {
-      uart_writeString("Programm beendet");
-      while (true){}
     }
   }
 }

@@ -19,5 +19,6 @@ static uint32_t errors;
 void reset_program(); // Spiel zurücksetzen
 void inc_errors();  // Fehler erhöhen
 int hangman();  // main
+void check_gamestate();
 
 #endif // MAIN_H
