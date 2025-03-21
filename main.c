@@ -1,14 +1,10 @@
-//
-// Created by infohoschie on 09.12.24.
-//
-
 #include "devices/random.h"
 #include "devices/uart.h"
 #include "devices/timer.h"
+#include "src/main.h"
 
 #include <stdbool.h>
 
-#include "src/main.h"
 
 
 static void waitRelease( void );
@@ -20,20 +16,7 @@ static void timerTest( void );
 int main( void )
 {
   uart_init();
-  //uart_writeString("TEST");
-  //timer_init(TIMER0);
-  //waitRelease();
-
-  //uart_init();
-  //uart_writeString( "Hello World!\n" );
   hangman();
-
-  //char myARRAY[]={ 'A','B','C' };
-  //uart_writeString( myARRAY );
-
-  // randomNumberTest();
-
-  timerTest();
 }
 
 static void waitRelease( void )
