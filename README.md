@@ -2,6 +2,8 @@
 
 Dies ist unser Hangman-Projekt für Systemnahe Programmierung. Im Folgenden wird das Spiel und der Aufbau der Dokumente erklärt. 
 Bei Rückfragen wenden Sie sich gerne an: johler.tim-it23@it.dhbw-ravensburg.de
+Hier befindet sich das github Repo für das Projekt (genau gleich wie in der Abgabe:
+https://github.com/Fabse47/Systemnahe_Programmierung.git
 
 ## Projektüberblick und Spielweise
 Das Programm startet mit einem Menü, in dem man entweder direkt das Spiel
