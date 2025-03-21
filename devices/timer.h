@@ -158,9 +158,5 @@ void timer_capture( Timer timer, TimerCaptureCompare capture );
  */
 void timer_clearCompareEvent( Timer timer );
 
-// ----------Eigene Funktionen ---------------
-void timer_start_measurement(Timer timer);
-uint32_t timer_get_elapsed(Timer timer);
-// -------------------------------------------
 
 #endif

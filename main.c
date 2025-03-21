@@ -20,7 +20,8 @@ static void timerTest( void );
 int main( void )
 {
   uart_init();
-  uart_writeString("TEST");
+  //uart_writeString("TEST");
+  //timer_init(TIMER0);
   //waitRelease();
 
   //uart_init();

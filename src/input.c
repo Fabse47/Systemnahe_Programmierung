@@ -1,59 +1,86 @@
 #include "input.h"
 
-
-char get_player_input() { // Eingabe ohne Timer
+/**
+ * @brief Liest eine einzelne Benutzereingabe (Buchstabe a–z oder A–Z) ohne Timeout.
+ *
+ * Diese Funktion blockiert so lange, bis der Benutzer eine gültige Eingabe tätigt.
+ * Anschließend werden Großbuchstaben in Kleinbuchstaben umgewandelt.
+ * Falls ein ungültiges Zeichen eingegeben wurde, wird dies ausgegeben
+ * und erneut auf eine Eingabe gewartet (rekursiver Aufruf).
+ *
+ * @return Gültiger Kleinbuchstabe (a–z).
+ */
+char get_player_input() {
   char input;
   do {
-    input = uart_readByte();  // Nicht blockierende UART-Funktion
-  } while (input == 0);  // Warten, bis ein gültiger Wert kommt
+    input = uart_readByte();  // Eingabe einlesen
+  } while (input == 0);       // Warten, bis ein gültiger Wert empfangen wird
+
   while (uart_readByte() != 0);  // UART-Puffer leeren
 
-  // Echo der Eingabe (falls gewünscht)
-  uart_writeByte(input);
+  uart_writeByte(input);       // Echo der Eingabe
   uart_writeString("\n");
 
   // Prüfen, ob es ein gültiger Buchstabe ist (a-z oder A-Z)
   if ((input >= 'a' && input <= 'z') || (input >= 'A' && input <= 'Z')) {
+    // In Kleinbuchstaben umwandeln, falls Großbuchstabe
     if (input >= 'A' && input <= 'Z') {
-      input += 32;  // In Kleinbuchstaben umwandeln
+      input += 32;
     }
     return input;
   } else {
     uart_writeString("Ungültige Eingabe! Bitte nur Buchstaben eingeben.\n");
-    return get_player_input();  // Rekursiver Aufruf für eine neue Eingabe
+    // Rekursiver Aufruf für eine neue Eingabe
+    return get_player_input();
   }
 }
 
-
-char get_player_input_with_timeout() {  // Eingabe mit Timer
+/**
+ * @brief Liest eine einzelne Benutzereingabe (Buchstabe a–z oder A–Z) mit Timeout.
+ *
+ * Diese Funktion blockiert bis ein Zeichen empfangen wurde,
+ * erhöht den Antwortzähler (@ref response_count) bei jeder Eingabe und
+ * konvertiert Großbuchstaben in Kleinbuchstaben. Ist die Eingabe ungültig,
+ * wird ein Hinweis ausgegeben und wieder auf Eingabe gewartet.
+ *
+ * @note Das Timeout wird über die @c timer -Funktionen in anderen Teilen des Programms gesteuert.
+ *       Sollte ein echter Timeout ablaufen, wird dies durch einen
+ *       entsprechenden Interrupt oder eine andere Logik behandelt.
+ *
+ * @return Gültiger Kleinbuchstabe (a–z), wenn erfolgreich eingelesen.
+ */
+char get_player_input_with_timeout() {
   uart_writeString("\nGib einen Buchstaben ein: ");
 
-  timer_start_measurement(TIMER0);
-  timer_capture(TIMER0, CC0);
-  uint32_t start_time = timer_captureCompareGet(TIMER0, CC0);
+  // Leere den UART-Puffer vor jeder Eingabe
+  while (uart_readByte() != 0);
 
-  while (uart_readByte() != 0); // Leere den UART-Puffer vor jeder Eingabe
   char input = 0;
 
   while (1) {
-    timer_capture(TIMER0, CC0);
-    uint32_t elapsed_time = timer_captureCompareGet(TIMER0, CC0) - start_time;
-
-    input = uart_readByteBlocking();
+    input = uart_readByteBlocking();  // Blockierende Leseoperation
     if (input != 0) {
-
-      uart_writeByte(input);
+      uart_writeByte(input);  // Echo der Eingabe
       uart_writeString("\n");
 
-      while (uart_readByte() != 0); // Erneut Puffer leeren nach der Eingabe
+      // Puffer nach der Eingabe erneut leeren
+      while (uart_readByte() != 0);
 
-      timer_capture(TIMER0, CC0);
-      uint32_t elapsed_time = timer_captureCompareGet(TIMER0, CC0) - start_time;
-
-      total_response_time += correct_time(elapsed_time);
+      // Antwortzähler erhöhen
       response_count++;
 
-      return input;
+      // Prüfen, ob es ein gültiger Buchstabe ist (a-z oder A-Z)
+      if ((input >= 'a' && input <= 'z') || (input >= 'A' && input <= 'Z')) {
+        // In Kleinbuchstaben umwandeln, falls Großbuchstabe
+        if (input >= 'A' && input <= 'Z') {
+          input += 32;
+        }
+        return input;
+      } else {
+        uart_writeString("Bitte nur Buchstaben eingeben.\n");
+        // Erneut warten auf eine Eingabe (rekursiver Aufruf)
+        return get_player_input_with_timeout();
+      }
     }
   }
 }

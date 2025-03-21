@@ -14,8 +14,8 @@ void Interrupt2_Handler(void)
   register_write( Interrupt_ICPR, Interrupt_ID2 );
 
   uart_readByte();
-  //uart_writeByte('X');
-  timer_stop( TIMER0 );
+
+  timer_clear( TIMER0 );
 }
 
 void uart_init()

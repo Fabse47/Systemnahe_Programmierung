@@ -5,17 +5,20 @@
 #include "input.h"
 #include "output.h"
 #include "wordlist.h"
+#include "hangman_timer.h"
 #include "../devices/timer.h"
 #include "../devices/uart.h"
 
-#define MAX_ERRORS 6  // Maximale Anzahl an Fehlern
-#define MAX_WORD_LENGTH 12  // Maximale Wortlänge (Anzahl Buchstaben)
-
-extern uint32_t total_response_time; // gesamte Antwortezeit
-extern uint32_t response_count;  // Anzahl der Versuche (getippte Buchstaben)
-static uint32_t errors;
-
-void reset_program(); // Spiel zurücksetzen
-int hangman();  // main
+/**
+ * @brief Startet das Hangman-Spiel.
+ *
+ * Diese Funktion initialisiert das Spiel, startet benötigte Timer,
+ * zeigt das Eingabemenü an und läuft dann in einer Endlosschleife
+ * zur Verarbeitung der Benutzereingaben. Sobald das Wort erraten
+ * oder die maximale Fehlerzahl erreicht wurde, wird das Spiel
+ * durch die entsprechende Auswertelogik in @ref check_gamestate
+ * beendet.
+ */
+int hangman();
 
 #endif // MAIN_H
